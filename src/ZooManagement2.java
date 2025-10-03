@@ -19,7 +19,7 @@ public class ZooManagement2 {
         // Premier affichage
         System.out.println("Le zoo " + zoo.zooName + " contient " + zoo.nbrCages + " cages.");
 
-        // Deuxième affichage (message demandé)
+        // Deuxième affichage 
         System.out.println(zoo.zooName + " comporte " + zoo.nbrCages + " cages.");
 
         s.close();
