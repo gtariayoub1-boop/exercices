@@ -8,6 +8,13 @@ public class Zoo {
     private String city;
     private int animalCount = 0;
 
+    public Zoo() {
+        this.name = "Zoo inconnu";
+        this.city = "Ville inconnue";
+        this.nbrCages = 10;
+        this.animals = new Animal[MAX_ANIMALS];
+    }
+
     public Zoo(String name, String city, int nbrCages) {
         setName(name);
         this.city = city;
@@ -15,7 +22,6 @@ public class Zoo {
         this.animals = new Animal[MAX_ANIMALS];
     }
 
-    // Getters et setters
     public String getName() { return name; }
     public String getCity() { return city; }
     public int getNbrCages() { return nbrCages; }
@@ -46,7 +52,6 @@ public class Zoo {
         return true;
     }
 
-    // Supprimer un animal
     public boolean removeAnimal(Animal animal) {
         int index = searchAnimal(animal);
         if (index == -1) {
@@ -62,7 +67,6 @@ public class Zoo {
         return true;
     }
 
-    // Recherche par nom
     public int searchAnimal(Animal animal) {
         for (int i = 0; i < animalCount; i++) {
             if (animals[i].getName().equals(animal.getName())) {
@@ -72,17 +76,10 @@ public class Zoo {
         return -1;
     }
 
-    // Vérifier si le zoo est plein
     public boolean isZooFull() {
         return animalCount >= Math.min(nbrCages, MAX_ANIMALS);
     }
 
-    // Comparer deux zoos
-    public static Zoo comparerZoo(Zoo z1, Zoo z2) {
-        return (z1.animalCount >= z2.animalCount) ? z1 : z2;
-    }
-
-    // Affichage des animaux
     public void displayAnimals() {
         System.out.println("Animaux présents dans le zoo :");
         if (animalCount == 0) {
@@ -90,16 +87,19 @@ public class Zoo {
             return;
         }
         for (int i = 0; i < animalCount; i++) {
-            System.out.println("- " + animals[i].getName() + " (" + animals[i].getFamily() + ", âge: " + animals[i].getAge() + ")");
+            System.out.println("- " + animals[i]);
         }
     }
 
-    // Affichage infos
     public void displayZooInfo() {
         System.out.println("Nom du zoo : " + name);
         System.out.println("Ville : " + city);
         System.out.println("Nombre de cages : " + nbrCages);
         System.out.println("Nombre d'animaux : " + animalCount);
         System.out.println("Capacité maximale : " + MAX_ANIMALS);
+    }
+
+    public static Zoo comparerZoo(Zoo z1, Zoo z2) {
+        return (z1.animalCount >= z2.animalCount) ? z1 : z2;
     }
 }
