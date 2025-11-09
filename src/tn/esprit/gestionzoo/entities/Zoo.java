@@ -30,24 +30,27 @@ public class Zoo {
     public int getAquaticCount() { return aquaticCount; }
 
     // Ajouter un animal général
-    public boolean addAnimal(Animal animal) {
-        if (animal == null) return false;
-        if (searchAnimal(animal) != -1) {
-            System.out.println("Cet animal existe déjà dans le zoo !");
-            return false;
+    public void addAnimal(Animal animal) throws ZooFullException, InvalidAgeException {
+        if (animal == null) return;
+
+        if (animal.getAge() < 0) {
+            throw new InvalidAgeException("Impossible d'ajouter " + animal.getName() + " : âge négatif !");
         }
+
         if (animalCount >= MAX_ANIMALS) {
-            System.out.println("Le zoo est plein !");
-            return false;
+            throw new ZooFullException("Impossible d'ajouter " + animal.getName() + " : le zoo est plein !");
         }
-        animals[animalCount] = animal;
-        animalCount++;
+
+        animals[animalCount++] = animal;
 
         if (animal instanceof Aquatic) {
             addAquaticAnimal((Aquatic) animal);
         }
-        return true;
+
+        System.out.println("Animal ajouté : " + animal.getName() + ". Nombre total d'animaux : " + animalCount);
     }
+
+
 
     // Ajouter un animal aquatique
     public boolean addAquaticAnimal(Aquatic aquatic) {
