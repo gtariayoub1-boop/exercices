@@ -1,84 +1,53 @@
+import java.util.TreeMap;
+
 public class Main {
     public static void main(String[] args) {
+        AffectationHashMap affectation = new AffectationHashMap();
 
-        /* ============================
-               TEST DEPARTEMENT
-           ============================ */
+        // Création des employés
+        Employee emp1 = new Employee(3, 2, "Dupont", "Jean", "IT");
+        Employee emp2 = new Employee(1, 3, "Martin", "Marie", "RH");
+        Employee emp3 = new Employee(2, 1, "Bernard", "Pierre", "Finance");
+        Employee emp4 = new Employee(4, 2, "Dubois", "Sophie", "IT");
 
-        DepartementHashSet depSet = new DepartementHashSet();
+        // Création des départements
+        Department dep1 = new Department(101, 10, "IT");
+        Department dep2 = new Department(102, 5, "RH");
+        Department dep3 = new Department(103, 8, "Finance");
 
-        Department d1 = new Department(1, 30, "Informatique");
-        Department d2 = new Department(2, 15, "Finance");
-        Department d3 = new Department(3, 20, "RH");
+        System.out.println("=== TEST AJOUT AFFECTATIONS ===");
+        affectation.ajouterEmployeDepartement(emp1, dep1);
+        affectation.ajouterEmployeDepartement(emp2, dep2);
+        affectation.ajouterEmployeDepartement(emp3, dep3);
+        affectation.ajouterEmployeDepartement(emp4, dep1);
 
-        // Ajouter
-        depSet.ajouterDepartement(d1);
-        depSet.ajouterDepartement(d2);
-        depSet.ajouterDepartement(d3);
+        System.out.println("\nEST DUPLICATION EMPLOYÉ");
+        affectation.ajouterEmployeDepartement(emp1, dep2); // Doit échouer
 
-        // Afficher
-        System.out.println("Liste des departements : ");
-        depSet.displayDepartement();
+        System.out.println("\nFFICHAGE COMPLET");
+        affectation.afficherEmployesEtDepartements();
 
-        // Recherche par nom
-        System.out.println("Recherche departement 'Finance' : " + depSet.rechercherDepartement("Finance"));
-        System.out.println("Recherche departement 'Marketing' : " + depSet.rechercherDepartement("Marketing"));
+        System.out.println("\nLISTE EMPLOYÉS");
+        affectation.afficherEmployes();
 
-        // Recherche par objet
-        System.out.println("Recherche departement d2 : " + depSet.rechercherDepartement(d2));
+        System.out.println("\nLISTE DÉPARTEMENTS");
+        affectation.afficherDepartements();
 
-        // Suppression
-        depSet.supprimerDepartement(d2);
-        System.out.println("Après suppression de Finance : ");
-        depSet.displayDepartement();
+        System.out.println("\nTEST RECHERCHE");
+        affectation.rechercherEmploye(emp1);
+        affectation.rechercherEmploye(new Employee(99, 1, "Inconnu", "Test", "Test"));
+        affectation.rechercherDepartement(dep1);
+        affectation.rechercherDepartement(new Department(999, 0, "Inexistant"));
 
-        // Tri avec TreeSet
-        System.out.println("Tri des departements par ID : ");
-        System.out.println(depSet.trierDepartementById());
+        System.out.println("\nTEST SUPPRESSION");
+        affectation.supprimerEmployeEtDepartement(emp2, dep2);
+        affectation.supprimerEmploye(emp3);
 
+        System.out.println("\n=== APRÈS SUPPRESSION ===");
+        affectation.afficherEmployesEtDepartements();
 
-        /* ============================
-                TEST EMPLOYES
-           ============================ */
-
-        System.out.println("\n============================");
-        System.out.println("     TEST EMPLOYES");
-        System.out.println("============================");
-
-        SocieteArrayList societe = new SocieteArrayList();
-
-        Employee e1 = new Employee(10, 3, "Ali", "Karoui", "Informatique");
-        Employee e2 = new Employee(5, 1, "Sarra", "Mansour", "Finance");
-        Employee e3 = new Employee(8, 2, "Houssem", "Trabelsi", "Informatique");
-        Employee e4 = new Employee(7, 3, "Meriem", "Ben Ali", "RH");
-
-        // Ajouter employés
-        societe.ajouterEmploye(e1);
-        societe.ajouterEmploye(e2);
-        societe.ajouterEmploye(e3);
-        societe.ajouterEmploye(e4);
-
-        // Affichage
-        System.out.println("\nListe employés : ");
-        societe.displayEmploye();
-
-        // Recherche
-        System.out.println("Recherche employé 'Ali' : " + societe.rechercherEmploye("Ali"));
-        System.out.println("Recherche employé 'Ahmed' : " + societe.rechercherEmploye("Ahmed"));
-
-        // Suppression
-        societe.supprimerEmploye(e2);
-        System.out.println("Après suppression de Sarra : ");
-        societe.displayEmploye();
-
-        // Tri par ID
-        societe.trierEmployeParId();
-        System.out.println("Tri employés par ID : ");
-        societe.displayEmploye();
-
-        // Tri par département puis grade
-        societe.trierEmployeParNomDepartementEtGrade();
-        System.out.println("Tri employés par NomDepartement + Grade : ");
-        societe.displayEmploye();
+        System.out.println("\n=== TEST TRI PAR ID ===");
+        TreeMap<Employee, Department> mapTriee = affectation.trierMap();
+        System.out.println("Map triée retournée : " + mapTriee);
     }
 }
